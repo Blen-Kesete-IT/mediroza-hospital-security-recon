@@ -1,47 +1,46 @@
-# Mediroza Hospital — External Security Reconnaissance
+# Mediroza Hospital — SOC and External Security Reconnaissance
 
-> **Confidential working repository.** This project contains target-specific infrastructure observations. Keep repository visibility set to **Private** and grant access only to explicitly authorized collaborators.
+> **Educational, authorized assessment.** This repository presents security observations and defensive analysis, not evidence of compromise. Share publicly only with permission from the project owner and after checking all repository history for confidential information.
 
-## Purpose
-Document an evidence-led, authorized external security assessment. The current material is an initial Nmap baseline, not a vulnerability report.
+## Overview
+This project documents a black-box reconnaissance exercise with a SOC analyst's defensive perspective. Evidence includes DNS enumeration, WHOIS, Nmap/Zenmap, infrastructure mapping, web technology fingerprinting, browser TLS inspection, and HTTP/session security observations.
 
-## Target profile
-| Field | Observation |
-|---|---|
-| Domain | medirozahospital.com |
-| IPv4 | 199.188.201.16 |
-| Reverse DNS | server274-1.web-hosting.com |
-| SMTP banner hostname | server274.web-hosting.com |
-| Scanner | Nmap 7.94SVN |
-| Scan date reported | 2026-11-23 |
-| Scan duration | 719.84 seconds |
+**Project status:** Reconnaissance and preliminary configuration review. **Verified exploitation:** None. **Patient data recovered:** None.
 
-## Initial scope of observations
-- Network service exposure and service identification
-- DNS and email configuration review
-- Web-server and TLS configuration review
-- Publicly disclosed web paths
+## Evidence and screenshots
 
-No exploitation, authentication attempts, access to patient/staff data, or intrusive testing is implied by this baseline.
+[Browse the screenshot evidence index](evidence/SCREENSHOT-GALLERY.md) and [evidence tracking notes](evidence/evidence-index.md).
 
-## Repository map
-- `scope/scope.md` — authorization and handling rules
-- `reconnaissance/01-initial-nmap-scan.md` — scan observations
-- `findings/findings-register.md` — preliminary findings and validation status
-- `evidence/evidence-index.md` — evidence tracking
+Images should be stored under `evidence/screenshots/` with sequential descriptive names and displayed in the gallery. Do not upload original session IDs, credentials, records, or confidential documents.
 
-## Status
-**Stage:** Initial reconnaissance  
-**Confirmed vulnerabilities:** None established from the supplied scan  
-**Next milestone:** Authorized passive DNS and configuration review
+## Observations
 
-## Handling requirements
-- Keep this repository private.
-- Do not commit credentials, tokens, private keys, session cookies, patient information, staff personal data, or unredacted sensitive logs.
-- Do not place patient portal contents or screenshots in evidence.
-- Preserve original evidence securely and record hashes where appropriate.
-- Treat banners and software versions as leads; verify before assigning CVEs or severity.
-- Obtain written authorization and define testing limits before any active follow-up.
+| Area | Evidence | Analyst interpretation |
+|---|---|---|
+| DNS/WHOIS | WHOIS, DNSRecon, NSLookup, Maltego | Maps infrastructure; not a vulnerability by itself |
+| Network | Nmap, Zenmap | 80/443 accessible in multiple runs; most scanned ports filtered |
+| Web stack | WhatWeb and server banners | Fingerprints may vary with virtual host or proxy layer |
+| HTTPS | Browser TLS and headers | TLS enabled; HSTS configuration requires site-specific review |
+| Sessions | Firefox Storage | Cookie flags observed; risk requires context and validation |
+| Authentication | Staff login screenshot | Login page discovered; no restricted access verified |
+
+## SOC use cases to develop
+- Correlate bursts of destination-port probes in firewall/IDS logs.
+- Alert on atypical spikes in authentication failures.
+- Review abnormal web requests, HTTP 403 bursts, and WAF events.
+- Audit access to sensitive files with authorized application logs.
+
+These are proposed detection scenarios, **not confirmed security incidents**.
+
+## Tools
+WHOIS · DNSRecon · NSLookup · Maltego · Nmap · Zenmap · WhatWeb · WAFW00F · Firefox Developer Tools.
+
+## Repository structure
+- `scope/scope.md` — authorization and handling guidance
+- `reconnaissance/01-initial-nmap-scan.md` — baseline findings
+- `findings/findings-register.md` — preliminary findings, validation status
+- `evidence/SCREENSHOT-GALLERY.md` — visual evidence index
+- `evidence/evidence-index.md` — evidence-handling notes
 
 ## Disclaimer
-All activity must be explicitly authorized and limited to the approved scope. This repository records observations for defensive assessment; it does not assert that the target is vulnerable or compromised.
+All testing must be authorized, scoped, and non-disruptive. Screenshots are security observations as of November 2026. No credential theft, login bypass, or data exposure is asserted. Do not publish protected patient/staff information. Before making this repository public, inspect all files **and Git history**, and get permission to disclose target-specific details.
